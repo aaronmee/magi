@@ -86,10 +86,10 @@ patch --ignore-whitespace -p1 < "${BASE_DIR}/contrib/bdb/bdb.patch"
 
 # The packaged config.guess and config.sub are ancient (2009) and can cause build issues.
 # Replace them with modern versions.
-CONFIG_GUESS_URL='https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=4550d2f15b3a7ce2451c1f29500b9339430c877f'
-CONFIG_GUESS_HASH='c8f530e01840719871748a8071113435bdfdf75b74c57e78e47898edea8754ae'
-CONFIG_SUB_URL='https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=4550d2f15b3a7ce2451c1f29500b9339430c877f'
-CONFIG_SUB_HASH='3969f7d5f6967ccc6f792401b8ef3916a1d1b1d0f0de5a4e354c95addb8b800e'
+CONFIG_GUESS_URL='https://gitweb.git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=a2287c3041a3f2a204eb942e09c015eab00dc7dd'
+CONFIG_GUESS_HASH='50205cf3ec5c7615b17f937a0a57babf4ec5cd0aade3d7b3cccbe5f1bf91a7ef'
+CONFIG_SUB_URL='https://gitweb.git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=a2287c3041a3f2a204eb942e09c015eab00dc7dd'
+CONFIG_SUB_HASH='26b852f75a637448360a956931439f7e818bf63150eaadb9b85484347628d1fd'
 
 rm -f "dist/config.guess"
 rm -f "dist/config.sub"
@@ -99,6 +99,7 @@ http_get "${CONFIG_SUB_URL}" dist/config.sub "${CONFIG_SUB_HASH}"
 
 cd build_unix/
 
+export CFLAGS="-Wno-error=implicit-function-declaration -Wno-error=format-security -Wno-error=implicit-int"
 "${BDB_PREFIX}/${BDB_VERSION}/dist/configure" \
   --enable-cxx --disable-shared --disable-replication --with-pic --prefix="${BDB_PREFIX}" \
   "${@}"
